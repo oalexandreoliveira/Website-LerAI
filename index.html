@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classificação de E-mails</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- Ícone da aplicação e Nome -->
+            <div class="logo-container">
+                <!-- Ícone -->
+                <img src="BRANCO.png" alt="Ícone da Ler AI" class="app-logo">
+                <!-- Nome da aplicação -->
+                <h1>Ler AI</h1>
+            </div>
+            <h2>Seu agente automatizador de e-mails</h2>
+        </header>
+
+        <!-- Formulário para envio de texto ou arquivo -->
+        <div class="form-container">
+            <form id="email-form">
+                <!-- Campo para o arquivo -->
+                <label for="email-upload">Escolha um arquivo de e-mail:</label>
+                <input type="file" id="email-upload" name="email-file" accept=".txt, .pdf">
+                
+                <!-- Campo para o texto -->
+                <label for="email-text">Ou cole o texto do e-mail diretamente abaixo:</label>
+                <textarea name="email-text" id="email-text" rows="6" placeholder="Cole o conteúdo do e-mail aqui..."></textarea>
+
+                <!-- Botão para submeter o formulário -->
+                <button type="submit">Enviar e Processar</button>
+            </form>
+        </div>
+
+        <!-- Seção para exibir os resultados -->
+        <div class="result-container">
+            <h2>Resultado da Classificação:</h2>
+            <p><strong>Categoria:</strong> <span id="category-result">Em breve...</span></p>
+            <p><strong>Resposta Sugerida:</strong> <span id="response-result">Em breve...</span></p>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Desenvolvido por Alexandre Oliveira</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

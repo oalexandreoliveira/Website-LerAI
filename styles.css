@@ -1,0 +1,151 @@
+/* Resetando estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #0688df, #0342b6);
+    border-radius: 15px;
+    padding: 40px;
+}
+
+/* Estilo do header */
+header {
+    display: flex;
+    flex-direction: column;  /* Organiza os elementos na coluna */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Logo e nome */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre o ícone e o nome */
+    margin-bottom: 10px; /* Espaço entre logo e tagline */
+}
+
+/* Ícone da aplicação */
+.app-logo {
+    width: 100px;
+    height: 100px;
+}
+
+/* Título da aplicação */
+h1 {
+    font-size: 5rem;
+    font-family: boxigen;
+    color: #ffffff;
+    margin: 0;
+}
+
+/* Tagline abaixo do título */
+h2 {
+    font-size: 2.5rem;
+    color: #f5f5f5;
+}
+
+/* Estilo do formulário */
+.form-container {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+/* Labels dos campos */
+label {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    display: block;
+    color: #42c5f5;
+}
+
+/* Inputs e textarea */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #2d2d2d;
+    color: white;
+    border: 1px solid #42c5f5;
+}
+
+/* Estilo do botão */
+button {
+    background-color: #42c5f5;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #39a3c0;
+}
+
+/* Seção de resultados */
+.result-container {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Estilo dos resultados */
+.result-container p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 1rem;
+    color: #aaa;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .form-container, .result-container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    /* Ícone do logo reduzido para telas menores */
+    .app-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* Ajustando o tamanho da tagline */
+    h2 {
+        font-size: 1rem;
+    }
+}
