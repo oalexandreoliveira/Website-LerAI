@@ -61,7 +61,7 @@
             document.getElementById("response-result").textContent = "Aguarde...";
 
             // Envia a requisição para o backend usando AJAX
-            fetch('http://localhost:5000/process-email', {
+            fetch('https://website-lerai.onrender.com/process-email', {  // Altere para o seu link de produção
                 method: 'POST',
                 body: formData
             })
@@ -81,6 +81,9 @@
             .catch(error => {
                 console.error('Erro ao processar o e-mail:', error);
                 alert('Erro ao processar o e-mail. Detalhes: ' + error.message);
+                // Exibe uma mensagem de erro de fallback
+                document.getElementById("category-result").textContent = "Erro";
+                document.getElementById("response-result").textContent = "Ocorreu um erro ao processar o seu pedido.";
             });
         });
     </script>
