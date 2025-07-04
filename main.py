@@ -6,8 +6,8 @@ from sklearn.pipeline import make_pipeline
 import fitz  # PyMuPDF para lidar com PDFs
 import os
 
-app = Flask(__name__)
-CORS(app)  # Permite requisições de qualquer origem
+app = Flask(__name__, static_folder='static')
+CORS(app)
 
 # Exemplo de dados para treinar o modelo
 train_data = [
@@ -19,17 +19,14 @@ train_data = [
     "Agradeço pelo apoio e carinho",  # Improdutivo
 ]
 
-# Rótulos para os dados de treinamento (1 = Produtivo, 0 = Improdutivo)
 train_labels = [1, 1, 1, 0, 0, 0]
 
-# Criando um pipeline para classificação
 model = make_pipeline(TfidfVectorizer(), LogisticRegression())
 model.fit(train_data, train_labels)
 
-# Função para ler o texto de um PDF
 def extract_text_from_pdf(pdf_file):
     try:
-        doc = fitz.open(stream=pdf_file.read(), filetype="pdf")  # Usar o stream do arquivo enviado
+        doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
         text = ""
         for page in doc:
             text += page.get_text()
@@ -37,17 +34,15 @@ def extract_text_from_pdf(pdf_file):
     except Exception as e:
         return f"Erro ao extrair texto do PDF: {str(e)}"
 
-# Função para ler o texto de um arquivo .txt
 def extract_text_from_txt(txt_file):
     try:
-        return txt_file.read().decode('utf-8')  # Lê o conteúdo do arquivo de texto
+        return txt_file.read().decode('utf-8')
     except Exception as e:
         return f"Erro ao extrair texto do TXT: {str(e)}"
 
-# Função simples para classificar o e-mail
 def classify_email(text):
     try:
-        prediction = model.predict([text])  # Previsão do modelo
+        prediction = model.predict([text])
         if prediction == 1:
             return "Produtivo", "Estamos analisando o seu caso, por favor, aguarde enquanto nossa equipe verifica a situação."
         else:
@@ -57,34 +52,32 @@ def classify_email(text):
 
 @app.route('/')
 def home():
-    return render_template('index.html')  # Renderiza o arquivo HTML
+    return render_template('index.html')
 
 @app.route('/process-email', methods=['POST'])
 def process_email():
     try:
         email_text = None
         
-        # Verifica se o arquivo foi enviado (PDF ou TXT)
         if 'email-file' in request.files:
             email_file = request.files['email-file']
             file_extension = email_file.filename.split('.')[-1].lower()
 
             if file_extension == 'pdf':
-                email_text = extract_text_from_pdf(email_file)  # Extrai o texto do PDF
+                email_text = extract_text_from_pdf(email_file)
             elif file_extension == 'txt':
-                email_text = extract_text_from_txt(email_file)  # Extrai o texto do arquivo TXT
+                email_text = extract_text_from_txt(email_file)
             else:
                 return jsonify({"error": "Formato de arquivo não suportado!"}), 400
-        # Verifica se o texto foi enviado diretamente no formulário
+
         elif 'email-text' in request.form:
-            email_text = request.form['email-text'].strip()  # Obtém o texto enviado via FormData
+            email_text = request.form['email-text'].strip()
             if not email_text:
                 return jsonify({"error": "Texto vazio, forneça o conteúdo do e-mail!"}), 400
 
         if not email_text:
-            return jsonify({"error": "E-mail não fornecido ou mal formatado!"}), 400  # Certifica-se de que o texto não esteja vazio
+            return jsonify({"error": "E-mail não fornecido ou mal formatado!"}), 400
 
-        # Classifica o e-mail e gera a resposta
         category, suggested_response = classify_email(email_text)
 
         return jsonify({
