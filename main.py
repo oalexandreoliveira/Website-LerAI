@@ -55,6 +55,10 @@ def classify_email(text):
     except Exception as e:
         return "Erro", f"Erro ao classificar o e-mail: {str(e)}"
 
+@app.route('/')
+def home():
+    return 'Bem-vindo ao Ler AI!'
+
 @app.route('/process-email', methods=['POST'])
 def process_email():
     try:
