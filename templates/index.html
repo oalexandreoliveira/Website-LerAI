@@ -53,24 +53,17 @@
             }
 
             if (emailText) {
-                formData.delete("email-file");  // Remove o campo de arquivo se o texto for fornecido
+                formData.delete("email-file");
             }
 
             document.getElementById("category-result").textContent = "Processando...";
             document.getElementById("response-result").textContent = "Aguarde...";
 
-            fetch('http://localhost:5000/process-email', {
+            fetch('/process-email', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(error => {
-                        throw new Error(error.error);
-                    });
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 document.getElementById("category-result").textContent = data.category;
                 document.getElementById("response-result").textContent = data.suggested_response;
