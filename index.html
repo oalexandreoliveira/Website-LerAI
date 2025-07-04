@@ -9,33 +9,25 @@
 <body>
     <div class="container">
         <header>
-            <!-- Ícone da aplicação e Nome -->
             <div class="logo-container">
-                <!-- Ícone -->
                 <img src="BRANCO.png" alt="Ícone da Ler AI" class="app-logo">
-                <!-- Nome da aplicação -->
                 <h1>Ler AI</h1>
             </div>
             <h2>Seu agente automatizador de e-mails</h2>
         </header>
 
-        <!-- Formulário para envio de texto ou arquivo -->
         <div class="form-container">
-            <form id="email-form">
-                <!-- Campo para o arquivo -->
+            <form id="email-form" enctype="multipart/form-data">
                 <label for="email-upload">Escolha um arquivo de e-mail:</label>
                 <input type="file" id="email-upload" name="email-file" accept=".txt, .pdf">
-                
-                <!-- Campo para o texto -->
+
                 <label for="email-text">Ou cole o texto do e-mail diretamente abaixo:</label>
                 <textarea name="email-text" id="email-text" rows="6" placeholder="Cole o conteúdo do e-mail aqui..."></textarea>
 
-                <!-- Botão para submeter o formulário -->
                 <button type="submit">Enviar e Processar</button>
             </form>
         </div>
 
-        <!-- Seção para exibir os resultados -->
         <div class="result-container">
             <h2>Resultado da Classificação:</h2>
             <p><strong>Categoria:</strong> <span id="category-result">Em breve...</span></p>
@@ -47,6 +39,50 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.getElementById("email-form").addEventListener("submit", function(event) {
+            event.preventDefault();  // Evita o envio padrão do formulário
+
+            const formData = new FormData(this);
+            // Verifica se o campo de texto foi preenchido e o campo de arquivo está vazio
+            const emailText = document.getElementById("email-text").value.trim();
+            const emailFile = document.getElementById("email-upload").files[0];
+
+            if (!emailText && !emailFile) {
+                alert("Por favor, forneça um texto ou um arquivo!");
+                return;
+            }
+
+            if (emailText) {
+                formData.delete("email-file");  // Remove o campo de arquivo se o texto for fornecido
+            }
+
+            document.getElementById("category-result").textContent = "Processando...";
+            document.getElementById("response-result").textContent = "Aguarde...";
+
+            // Envia a requisição para o backend usando AJAX
+            fetch('http://localhost:5000/process-email', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(error => {
+                        throw new Error(error.error);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Atualiza os resultados com os dados recebidos do backend
+                document.getElementById("category-result").textContent = data.category;
+                document.getElementById("response-result").textContent = data.suggested_response;
+            })
+            .catch(error => {
+                console.error('Erro ao processar o e-mail:', error);
+                alert('Erro ao processar o e-mail. Detalhes: ' + error.message);
+            });
+        });
+    </script>
 </body>
 </html>
