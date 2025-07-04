@@ -2,7 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
-    color: #333;
+    color: rgb(51, 51, 51);
     margin: 0;
     padding: 0;
 }
@@ -28,6 +28,7 @@ header {
 .app-logo {
     width: 40px; /* Ajuste conforme necessário */
     height: auto;
+    color: rgb(51, 51, 51);
 }
 
 h1 {
