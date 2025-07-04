@@ -7,3 +7,4 @@ gunicorn==20.1.0
 transformers==4.11.3
 tokenizers==0.9.0
 numpy==1.21.0
+setuptools>=56.0.0
