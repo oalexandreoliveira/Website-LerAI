@@ -44,7 +44,6 @@
             event.preventDefault();  // Evita o envio padrão do formulário
 
             const formData = new FormData(this);
-            // Verifica se o campo de texto foi preenchido e o campo de arquivo está vazio
             const emailText = document.getElementById("email-text").value.trim();
             const emailFile = document.getElementById("email-upload").files[0];
 
@@ -60,8 +59,7 @@
             document.getElementById("category-result").textContent = "Processando...";
             document.getElementById("response-result").textContent = "Aguarde...";
 
-            // Envia a requisição para o backend usando AJAX
-            fetch('https://website-lerai.onrender.com/process-email', {  // Altere para o seu link de produção
+            fetch('http://localhost:5000/process-email', {
                 method: 'POST',
                 body: formData
             })
@@ -74,16 +72,12 @@
                 return response.json();
             })
             .then(data => {
-                // Atualiza os resultados com os dados recebidos do backend
                 document.getElementById("category-result").textContent = data.category;
                 document.getElementById("response-result").textContent = data.suggested_response;
             })
             .catch(error => {
                 console.error('Erro ao processar o e-mail:', error);
                 alert('Erro ao processar o e-mail. Detalhes: ' + error.message);
-                // Exibe uma mensagem de erro de fallback
-                document.getElementById("category-result").textContent = "Erro";
-                document.getElementById("response-result").textContent = "Ocorreu um erro ao processar o seu pedido.";
             });
         });
     </script>
