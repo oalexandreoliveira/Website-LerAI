@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -56,8 +56,8 @@ def classify_email(text):
         return "Erro", f"Erro ao classificar o e-mail: {str(e)}"
 
 @app.route('/')
-def index():
-    return "Bem-vindo ao Ler AI"
+def home():
+    return render_template('index.html')  # Renderiza o arquivo HTML
 
 @app.route('/process-email', methods=['POST'])
 def process_email():
@@ -96,4 +96,4 @@ def process_email():
         return jsonify({"error": f"Erro no processamento: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=True)
